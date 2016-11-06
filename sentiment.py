@@ -38,13 +38,13 @@ x_max = 5
 x, y, x_vals, y_vals = 0, 0, np.zeros(0), np.zeros(0) #plot1
 x2, y2, x_vals2, y_vals2 = 0, 0, np.zeros(0), np.zeros(0) #plot2
 
-#global vars for keywords to be compared
+#Keywords to be compared.
 topic1 = ''
 topic2 = ''
 
-#user-defined limit on how many tweets to stream.
-tweet_limit = 0
-#plot animation
+#user-defined limit on how many tweets to stream (DEFAULT = 10)
+tweet_limit = 10
+#Plot animation.
 ani = animation.FuncAnimation
 
 #Define a listener class.
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     #Create legend.
     subplot.legend([p1,p2], [p1.get_label(),p2.get_label()])
     #Clear file of tweets.
-    open(filename, 'tweets.txt').close()
+    open('tweets.txt', 'w').close()
     #Filter stream to tweets containing keyword(s). Runs on separate thread.
     stream.filter(track=[topic1, topic2], async=True)
     #Wait for tweets to start streaming.
