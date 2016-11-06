@@ -41,7 +41,7 @@ A plot will open up and sentiment of both topics will be plotted until the tweet
 + As tweets are streamed, each tweet is extracted and its sentiment is computed and added to the respective x/y value numpy arrays in on_data(). The tweets are also outputted to a file tweets.txt with the sentiment.
 + Note that sentiment is only considered if its objectivity is less than 0.2 (filtering out very objective tweets). It was interesting to play around with this, however I wasn't able to come to a consensus on filtering out objectivity vs subjectivity.
 + The animate_graph() function updates the newest x/y values on the plot, and also updates the scale of each of the axis as x/y values for each topic change.
-+ Once the max number of tweets has been hit, the stream and aniimation are both stopped.
++ Once the max number of tweets has been hit, the stream and animation are both stopped.
 
 ## Problems Encountered
 + There were some challenges with overlaying the sentiment of both topics onto the same subplot.
