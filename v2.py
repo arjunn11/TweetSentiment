@@ -27,14 +27,6 @@ subplot.grid(True)
 subplot.set_xlabel('# of Tweets')
 subplot.set_ylabel('Net Sentiment')
 
-#Plot Variables (# of tweets, net sentiment, x-axis values, y-axis values):
-x, y, x_vals, y_vals = 0, 0, np.zeros(0), np.zeros(0) #plot1
-x2, y2, x_vals2, y_vals2 = 0, 0, np.zeros(0), np.zeros(0) #plot2
-
-#Set plots
-p1, = subplot.plot(x_vals,y_vals,'b-', label='topic1')
-p2, = subplot.plot(x_vals2,y_vals2,'g-', label='topic2')
-
 #global vars for keywords to be compared
 topic1 = ''
 topic2 = ''
@@ -79,14 +71,10 @@ def animate_graph(i):
     lines = data.split('\n')
     data2 = open('topic2.txt', 'r').read()
     lines2 = data.split('\n')
-    global x
-    global y
-    global x_vals
-    global y_vals
-    global x2
-    global y2
-    global x_vals2
-    global y_vals2
+
+    #Plot Variables (# of tweets, net sentiment, x-axis values, y-axis values):
+    x, y, x_vals, y_vals = 0, 0, [], [] #plot1
+    x2, y2, x_vals2, y_vals2 = 0, 0, [], [] #plot2
 
     #Generate x/y values for graph based on sentiment.
     for line in lines:
@@ -95,21 +83,20 @@ def animate_graph(i):
         if(line):
             x += 1
             y += float(line)
-            np.append(x_vals, x)
-            np.append(y_vals, y)
+            x_vals.append(x)
+            y_vals.append(y)
 
     for line in lines2:
         line = line.strip()
         if(line):
             x2 += 1
             y2 += float(line)
-            np.append(x_vals2, x2)
-            np.append(y_vals2, y2)
+            x_vals2.append(x2)
+            y_vals2.append(y2)
 
-    p1.set_data(x_vals, y_vals)
-    p2.set_data(x_vals2, y_vals2)
+    subplot.clear()
+    subplot.plot(x_vals, y_vals, 'g-', x_vals2, y_vals2, 'b-')
 
-    return p1, p2
 
 if __name__ == '__main__':
     #Handle Twitter authentication.
@@ -117,19 +104,14 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     #Connect to Twitter Streaming API
     stream = Stream(auth, listener())
-    #Must declare global variables in order to modify values
-    #global topic1
-    #global topic2
     #Prompt user to enter two keywords to be compared.
     topic1 = input('Enter the first topic: ')
     topic2 = input('Enter the second topic: ')
-    global subplot
     subplot.set_title(topic1 + ' vs. ' + topic2 + ' Twitter Sentiment')
-
     #Filter stream to tweets containing keyword(s). Runs on separate thread.
     stream.filter(track=[topic1, topic2], async=True)
     #Wait for tweets to start streaming.
     time.sleep(5)
     #Plot data.
-    ani = animation.FuncAnimation(figure, animate_graph, blit=False, interval=5)
+    ani = animation.FuncAnimation(figure, animate_graph, interval=5)
     plt.show()
