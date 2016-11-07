@@ -9,10 +9,10 @@ import matplotlib.animation as animation
 import numpy as np
 
 #User credentials for Twitter API
-consumer_key = 'YSVkMY3uFU8Y3fjeXezFcBD72'
-consumer_secret = 'Csm5fPjuDyJNlzY2QJJRPgtI5VTJL6IXTsY7L9YorojJC1y9AK'
-access_token = '409752074-E38Wc8WF8bc0jst4NridK07hnfUuEX4LYDjQYc0o'
-access_token_secret = 'yqdvl8dtNWj8fDUEcZkg7Afz04pqEHfKMlKKKupUE6PAV'
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 font = {'size'   : 9}
 plt.rc('font', **font)
